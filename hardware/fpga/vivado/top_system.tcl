@@ -41,9 +41,9 @@ if { $USE_DDR < 0 } {
         set_property -dict \
             [list \
                  CONFIG.NUM_SLAVE_PORTS {1}\
-                 CONFIG.AXI_ADDR_WIDTH {30}\
-                 CONFIG.ACLK_PERIOD {5000} \
-                 CONFIG.INTERCONNECT_DATA_WIDTH {32}\
+                 CONFIG.AXI_ADDR_WIDTH {29}\
+                 CONFIG.ACLK_PERIOD {3333} \
+                 CONFIG.INTERCONNECT_DATA_WIDTH {128}\
                  CONFIG.M00_AXI_IS_ACLK_ASYNC {1}\
                  CONFIG.M00_AXI_WRITE_FIFO_DEPTH {32}\
                  CONFIG.M00_AXI_READ_FIFO_DEPTH {32}\
@@ -69,16 +69,16 @@ if { $USE_DDR < 0 } {
         
         set_property -dict \
         [list \
-             CONFIG.C0.DDR4_TimePeriod {1250} \
-             CONFIG.C0.DDR4_InputClockPeriod {4000} \
+             CONFIG.C0.DDR4_TimePeriod {833} \
+             CONFIG.C0.DDR4_InputClockPeriod {3332} \
              CONFIG.C0.DDR4_CLKOUT0_DIVIDE {5} \
-             CONFIG.C0.DDR4_MemoryPart {EDY4016AABG-DR-F} \
-             CONFIG.C0.DDR4_DataWidth {32} \
+             CONFIG.C0.DDR4_MemoryPart {MT40A256M16GE-075E} \
+             CONFIG.C0.DDR4_DataWidth {16} \
              CONFIG.C0.DDR4_AxiSelection {true} \
-             CONFIG.C0.DDR4_CasLatency {11} \
-             CONFIG.C0.DDR4_CasWriteLatency {11} \
-             CONFIG.C0.DDR4_AxiDataWidth {32} \
-             CONFIG.C0.DDR4_AxiAddressWidth {30} \
+             CONFIG.C0.DDR4_CasLatency {18} \
+             CONFIG.C0.DDR4_CasWriteLatency {12} \
+             CONFIG.C0.DDR4_AxiDataWidth {128} \
+             CONFIG.C0.DDR4_AxiAddressWidth {29} \
              CONFIG.ADDN_UI_CLKOUT1_FREQ_HZ {100} \
              CONFIG.C0.BANK_GROUP_WIDTH {1}] [get_ips ddr4_0]
 	
@@ -93,7 +93,6 @@ if { $USE_DDR < 0 } {
     read_xdc ./ddr.xdc
 
 }
-
 
 synth_design -include_dirs $INCLUDE -verilog_define $DEFINE -part $DEVICE -top $TOP
 
@@ -119,3 +118,5 @@ report_utilization -hierarchical -file reports/utilization.txt
 write_bitstream -force top_system.bit
 
 write_verilog -force top_system.v
+
+# write_project_tcl ./project_create.tcl
